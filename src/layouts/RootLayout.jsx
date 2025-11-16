@@ -4,10 +4,12 @@ import Navbar from "../pages/Shared/Navbar/Navbar.jsx";
 
 const RootLayout = () => {
     return (
-        <div className="font-urbanist max-w-7xl mx-auto">
-            <Navbar />
-            <Outlet />
-            <Footer />
+        <div className="font-urbanist bg-[#f3f6f6]">
+            <div className="max-w-7xl mx-auto">
+                <Navbar />
+                <Outlet />
+                <Footer />
+            </div>
         </div>
     );
 };

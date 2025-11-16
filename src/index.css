@@ -18,10 +18,18 @@
     font-style: normal;
 }
 
+.text-black-8 {
+    color: #606060;
+}
+
 .text-black-12 {
     color: #1F1F1F;
 }
 
 .bg-black-12 {
     background-color: #1F1F1F;
+}
+
+.border-blue-9 {
+    border-color: #03464D;
 }

@@ -1,6 +1,6 @@
 import { Swiper, SwiperSlide } from "swiper/react";
-import 'swiper/css';
-import 'swiper/css/pagination';
+import "swiper/css";
+import "swiper/css/pagination";
 import { Autoplay } from "swiper/modules";
 
 import amazonLogo from "../../../assets/brands/amazon.png";
