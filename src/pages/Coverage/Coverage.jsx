@@ -1,7 +1,7 @@
+import { useRef } from "react";
 import { useLoaderData } from "react-router";
 import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
-import {useRef} from "react";
 
 const Coverage = () => {
     const data = useLoaderData();
