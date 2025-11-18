@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { Link } from "react-router";
+import { Link, useLocation, useNavigate } from "react-router";
 import { useForm } from "react-hook-form";
 import AuthContext from "../../../contexts/AuthContext/AuthContext.jsx";
 import SocialLogin from "../SocialLogin/SocialLogin.jsx";
@@ -10,7 +10,9 @@ const Register = () => {
         handleSubmit,
         formState: {errors}
     } = useForm();
-    const { registerUser, updateUser } = useContext(AuthContext);
+    const { registerUser, updateUser, setUser } = useContext(AuthContext);
+    const location = useLocation();
+    const navigate = useNavigate();
 
     const handleRegistration = (data) => {
         registerUser(data.email, data.password)
@@ -21,7 +23,8 @@ const Register = () => {
                 })
                 .then(() => {
                     console.log("Registered Successfully");
-                    console.log(result.user);
+                    setUser(result.user);
+                    navigate(location?.state || "/", { replace: true });
                 })
                 .catch((error) => {
                     console.log(error.message);

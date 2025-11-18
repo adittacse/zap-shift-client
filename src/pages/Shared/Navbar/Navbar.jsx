@@ -2,6 +2,7 @@ import { useContext } from "react";
 import { Link, NavLink } from "react-router";
 import Logo from "../../../components/Logo/Logo.jsx";
 import AuthContext from "../../../contexts/AuthContext/AuthContext.jsx";
+import { LuArrowUpRight } from "react-icons/lu";
 
 const Navbar = () => {
     const { user, logOut } = useContext(AuthContext);
@@ -47,10 +48,13 @@ const Navbar = () => {
             <div className="navbar-end">
                 {
                     user ? <>
-                        <button onClick={handleLogOut} className="btn mr-4">Sign Out</button>
+                        <button onClick={handleLogOut} className="btn btn-primary font-bold py-4 px-8">Sign Out</button>
                     </> : <>
-                        <Link to="/login" className="btn mr-4">Sign In</Link>
-                        <Link to="/be-a-rider" className="btn">Be a Rider</Link>
+                        <Link to="/login" className="btn font-bold py-4 px-8 mr-4">Sign In</Link>
+                        <Link to="/be-a-rider" className="btn bg-primary font-bold py-4 px-8">Be a Rider</Link>
+                        <div className="bg-black-12 rounded-full p-3 mr-5">
+                            <LuArrowUpRight className="text-primary w-4 h-4" />
+                        </div>
                     </>
                 }
             </div>
