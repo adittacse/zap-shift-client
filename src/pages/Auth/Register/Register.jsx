@@ -10,14 +10,24 @@ const Register = () => {
         handleSubmit,
         formState: {errors}
     } = useForm();
-    const {registerUser} = useContext(AuthContext);
+    const { registerUser, updateUser } = useContext(AuthContext);
 
     const handleRegistration = (data) => {
         registerUser(data.email, data.password)
             .then(result => {
-                console.log(result.user);
+                updateUser({
+                    displayName: data.name,
+                    photoUrl: data.photo
+                })
+                .then(() => {
+                    console.log("Registered Successfully");
+                    console.log(result.user);
+                })
+                .catch((error) => {
+                    console.log(error.message);
+                });
             })
-            .catch(error => {
+            .catch((error) => {
                 console.log(error.message);
             })
     }
@@ -30,6 +40,20 @@ const Register = () => {
 
                 <form onSubmit={handleSubmit(handleRegistration)}>
                     <fieldset className="fieldset">
+                        {/* name */}
+                        <label className="label">Name</label>
+                        <input {...register("name", {required: true})} type="text" className="input w-full"
+                               placeholder="Name"/>
+                        {errors.name?.type === "required" &&
+                            <p className="text-red-500 font-medium">Name is Required</p>}
+
+                        {/* photoURL */}
+                        <label className="label">Photo URL</label>
+                        <input {...register("photo", {required: true})} type="text" className="input w-full"
+                               placeholder="Photo URL"/>
+                        {errors.name?.type === "required" &&
+                            <p className="text-red-500 font-medium">Photo URL is Required</p>}
+
                         {/* email */}
                         <label className="label">Email</label>
                         <input {...register("email", {required: true})} type="email" className="input w-full"
