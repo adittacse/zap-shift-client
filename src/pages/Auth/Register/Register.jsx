@@ -3,6 +3,7 @@ import { Link, useLocation, useNavigate } from "react-router";
 import { useForm } from "react-hook-form";
 import AuthContext from "../../../contexts/AuthContext/AuthContext.jsx";
 import SocialLogin from "../SocialLogin/SocialLogin.jsx";
+import axios from "axios";
 
 const Register = () => {
     const {
@@ -10,25 +11,42 @@ const Register = () => {
         handleSubmit,
         formState: {errors}
     } = useForm();
-    const { registerUser, updateUser, setUser } = useContext(AuthContext);
+    const { registerUser, updateUserProfile, setUser } = useContext(AuthContext);
     const location = useLocation();
     const navigate = useNavigate();
 
     const handleRegistration = (data) => {
+        const imageFile = data.image[0];
+        if (!imageFile || !imageFile.type.startsWith("image/")) {
+            return;
+        }
+
         registerUser(data.email, data.password)
             .then(result => {
-                updateUser({
-                    displayName: data.name,
-                    photoUrl: data.photo
-                })
-                .then(() => {
-                    console.log("Registered Successfully");
-                    setUser(result.user);
-                    navigate(location?.state || "/", { replace: true });
-                })
-                .catch((error) => {
-                    console.log(error.message);
-                });
+                // 1. store the image in form data
+                const formData = new FormData();
+                formData.append("image", imageFile);
+
+                // 2. send the image to store and get the URL
+                axios.post(`https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_image_host_key}`, formData)
+                    .then(res => {
+                        // update user profile
+                        updateUserProfile({
+                            displayName: data.name,
+                            photoURL: res.data.data.url
+                        })
+                            .then(() => {
+                                console.log("Registered Successfully");
+                                setUser(result.user);
+                                navigate(location?.state || "/", { replace: true });
+                            })
+                            .catch((error) => {
+                                console.log(error.message);
+                            });
+                    })
+                    .catch(error => {
+                        console.log(error.message);
+                    });
             })
             .catch((error) => {
                 console.log(error.message);
@@ -50,12 +68,16 @@ const Register = () => {
                         {errors.name?.type === "required" &&
                             <p className="text-red-500 font-medium">Name is Required</p>}
 
-                        {/* photoURL */}
-                        <label className="label">Photo URL</label>
-                        <input {...register("photo", {required: true})} type="text" className="input w-full"
-                               placeholder="Photo URL"/>
-                        {errors.name?.type === "required" &&
-                            <p className="text-red-500 font-medium">Photo URL is Required</p>}
+                        {/* image file */}
+                        <label className="label">Image</label>
+                        <input {...register("image", {required: "Image is Required", validate: {
+                            isImage: (files) => {
+                                const file = files && files[0];
+                                return file && file.type.startsWith("image/") || "Only image files are allowed"
+                            }
+                            }})} type="file" className="file-input w-full" />
+                        {errors.image &&
+                            <p className="text-red-500 font-medium">{errors.image.message}</p>}
 
                         {/* email */}
                         <label className="label">Email</label>

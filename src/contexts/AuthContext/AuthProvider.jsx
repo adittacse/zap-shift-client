@@ -14,8 +14,7 @@ const AuthProvider = ({ children }) => {
         return createUserWithEmailAndPassword(auth, email, password);
     }
 
-    const updateUser = (data) => {
-        setLoading(true);
+    const updateUserProfile = (data) => {
         return updateProfile(auth.currentUser, data);
     }
 
@@ -50,7 +49,7 @@ const AuthProvider = ({ children }) => {
         setUser,
         loading,
         registerUser,
-        updateUser,
+        updateUserProfile,
         signInUser,
         signInGoogle,
         logOut
