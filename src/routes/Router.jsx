@@ -8,6 +8,7 @@ import Login from "../pages/Auth/Login/Login.jsx";
 import Register from "../pages/Auth/Register/Register.jsx";
 import Rider from "../pages/Rider/Rider.jsx";
 import PrivateRoute from "./PrivateRoute.jsx";
+import SendParcel from "../pages/SendParcel/SendParcel.jsx";
 
 const Router = createBrowserRouter([
     {
@@ -26,6 +27,11 @@ const Router = createBrowserRouter([
             {
                 path: "be-a-rider",
                 element: <PrivateRoute><Rider /></PrivateRoute>
+            },
+            {
+                path: "send-parcel",
+                loader: () => fetch("/serviceCenters.json"),
+                element: <PrivateRoute><SendParcel /></PrivateRoute>
             },
             {
                 path: "*",
