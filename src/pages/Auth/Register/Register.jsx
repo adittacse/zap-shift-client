@@ -105,7 +105,7 @@ const Register = () => {
                     </fieldset>
                 </form>
 
-                <p className="text-zinc-500">Already have an account? Please <Link to="/login" className="link link-hover text-green-8">Login</Link>
+                <p className="text-zinc-500">Already have an account? Please <Link state={location?.state} to="/login" className="link link-hover text-green-8">Login</Link>
                 </p>
 
                 <SocialLogin />

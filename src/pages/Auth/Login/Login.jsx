@@ -49,7 +49,7 @@ const Login = () => {
                     </fieldset>
                 </form>
 
-                <p className="text-zinc-500">Don’t have any account? <Link to="/register" className="link link-hover text-green-8">Register</Link></p>
+                <p className="text-zinc-500">Don’t have any account? <Link state={location?.state} to="/register" className="link link-hover text-green-8">Register</Link></p>
 
                 <SocialLogin />
             </div>
