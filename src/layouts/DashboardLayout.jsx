@@ -1,5 +1,6 @@
 import React from "react";
-import {Link, NavLink, Outlet} from "react-router";
+import { Link, NavLink, Outlet } from "react-router";
+import { TbTruckDelivery } from "react-icons/tb";
 
 const DashboardLayout = () => {
     return (
@@ -34,7 +35,10 @@ const DashboardLayout = () => {
 
                         {/* our dashboard links */}
                         <li>
-                            <NavLink to="/dashboard/my-parcels">My Parcels</NavLink>
+                            <NavLink to="/dashboard/my-parcels" className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="My Parcels">
+                                <TbTruckDelivery />
+                                <span className="is-drawer-close:hidden">My Parcels</span>
+                            </NavLink>
                         </li>
 
                         {/* List item */}
