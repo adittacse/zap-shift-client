@@ -9,6 +9,8 @@ import Register from "../pages/Auth/Register/Register.jsx";
 import Rider from "../pages/Rider/Rider.jsx";
 import PrivateRoute from "./PrivateRoute.jsx";
 import SendParcel from "../pages/SendParcel/SendParcel.jsx";
+import DashboardLayout from "../layouts/DashboardLayout.jsx";
+import MyParcels from "../pages/Dashboard/MyParcels/MyParcels.jsx";
 
 const Router = createBrowserRouter([
     {
@@ -51,6 +53,16 @@ const Router = createBrowserRouter([
                 path: "register",
                 element: <Register />
             }
+        ]
+    },
+    {
+        path: "dashboard",
+        element: <PrivateRoute><DashboardLayout /></PrivateRoute>,
+        children: [
+            {
+                path: "my-parcels",
+                element: <MyParcels />
+            },
         ]
     }
 ]);
