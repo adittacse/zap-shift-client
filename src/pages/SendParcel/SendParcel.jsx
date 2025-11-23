@@ -45,6 +45,8 @@ const SendParcel = () => {
             }
         }
 
+        data.cost = cost;
+
         Swal.fire({
             title: "Are you agree with the Cost?",
             text: `You will be charged ${cost} taka!`,
@@ -163,15 +165,15 @@ const SendParcel = () => {
                                 <fieldset className="fieldset">
                                     {/* receiver name */}
                                     <label className="label">Receiver Name</label>
-                                    <input {...register("ReceiverName")} type="text" className="input w-full mb-4" placeholder="Receiver Name" />
+                                    <input {...register("receiverName")} type="text" className="input w-full mb-4" placeholder="Receiver Name" />
 
                                     {/* receiver email */}
                                     <label className="label">Receiver email</label>
-                                    <input {...register("ReceiverEmail")} type="email" className="input w-full mb-4" placeholder="Receiver Email" />
+                                    <input {...register("receiverEmail")} type="email" className="input w-full mb-4" placeholder="Receiver Email" />
 
                                     {/* receiver phone number */}
                                     <label className="label">Receiver Phone Number</label>
-                                    <input {...register("ReceiverPhoneNumber")} type="text" className="input w-full mb-4" placeholder="Receiver Phone Number" />
+                                    <input {...register("receiverPhoneNumber")} type="text" className="input w-full mb-4" placeholder="Receiver Phone Number" />
 
                                     {/* receiver region */}
                                     <fieldset className="fieldset mb-4">
@@ -197,7 +199,7 @@ const SendParcel = () => {
 
                                     {/* receiver address */}
                                     <label className="label">Receiver Address</label>
-                                    <input {...register("ReceiverAddress")} type="text" className="input w-full mb-4" placeholder="Receiver Address" />
+                                    <input {...register("receiverAddress")} type="text" className="input w-full mb-4" placeholder="Receiver Address" />
 
                                     {/* delivery instruction */}
                                     <label className="label">Delivery Instruction</label>
