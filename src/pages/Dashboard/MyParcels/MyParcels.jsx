@@ -6,6 +6,7 @@ import { FaRegEdit } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
 import { FaMagnifyingGlass } from "react-icons/fa6";
 import Swal from "sweetalert2";
+import { Link } from "react-router";
 
 const MyParcels = () => {
     const { user } = useContext(AuthContext);
@@ -59,8 +60,8 @@ const MyParcels = () => {
                             <th>Cost</th>
                             <th>Receiver Name & Email</th>
                             <th>Receiver Address</th>
-                            <th>Pickup Instructions</th>
-                            <th>Delivery Instructions</th>
+                            <th>Payment</th>
+                            <th>Delivery Status</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
@@ -69,17 +70,25 @@ const MyParcels = () => {
                             parcels.map((parcel, index) => <tr key={parcel._id}>
                                 <th>{index + 1}</th>
                                 <td>
-                                    <p>{parcel.parcelName}</p>
-                                    <p>{parcel.parcelWeight} kg</p>
+                                    <p>{parcel?.parcelName}</p>
+                                    <p>{parcel?.parcelWeight} kg</p>
                                 </td>
-                                <td>{parcel.cost}</td>
+                                <td>{parcel?.cost}</td>
                                 <td>
-                                    <p>{parcel.receiverName}</p>
-                                    <p>{parcel.receiverEmail}</p>
+                                    <p>{parcel?.receiverName}</p>
+                                    <p>{parcel?.receiverEmail}</p>
                                 </td>
-                                <td>{parcel.receiverAddress}</td>
-                                <td>{parcel.pickupInstruction}</td>
-                                <td>{parcel.deliveryInstruction}</td>
+                                <td>{parcel?.receiverAddress}</td>
+                                <td>
+                                    {
+                                        parcel.paymentStatus === "paid" ?
+                                            <span className="text-green-500">Paid</span>
+                                            : <Link to={`/dashboard/payment/${parcel._id}`}>
+                                                <button className="btn btn-sm btn-primary text-black">Pay</button>
+                                            </Link>
+                                    }
+                                </td>
+                                <td>{parcel?.deliveryStatus}</td>
                                 <td className="space-x-2">
                                     <button className="btn btn-square hover:bg-primary tooltip" data-tip="View">
                                         <FaMagnifyingGlass />
