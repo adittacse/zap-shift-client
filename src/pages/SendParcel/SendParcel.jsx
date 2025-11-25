@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { useForm, useWatch } from "react-hook-form";
-import { useLoaderData } from "react-router";
+import { useLoaderData, useNavigate } from "react-router";
 import Swal from "sweetalert2";
 import useAxiosSecure from "../../hooks/useAxiosSecure.jsx";
 import AuthContext from "../../contexts/AuthContext/AuthContext.jsx";
@@ -19,6 +19,7 @@ const SendParcel = () => {
     const receiverRegion = useWatch({ control, name: "receiverRegion" });
     const axiosSecure = useAxiosSecure();
     const { user } = useContext(AuthContext);
+    const navigate = useNavigate();
 
     const districtsByRegions = (region) => {
         const regionsDistricts = serviceCenters.filter(c => c.region === region);
@@ -59,12 +60,14 @@ const SendParcel = () => {
             if (result.isConfirmed) {
                 axiosSecure.post("/parcels", data)
                     .then((res) => {
-                        console.log("res:", res.data);
                         if (res.data.insertedId) {
+                            navigate("/dashboard/my-parcels");
                             Swal.fire({
-                                title: "Congratulations!",
-                                text: "Your parcel has been send.",
-                                icon: "success"
+                                position: "top-end",
+                                icon: "success",
+                                title: "Parcel has created. Please Pay.",
+                                showConfirmButton: false,
+                                timer: 2000
                             });
                         }
                     })
