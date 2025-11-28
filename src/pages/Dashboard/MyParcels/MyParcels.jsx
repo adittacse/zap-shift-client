@@ -94,7 +94,7 @@ const MyParcels = () => {
                                 <td>{parcel?.receiverAddress}</td>
                                 <td>
                                     {
-                                        parcel.paymentStatus === "paid" ?
+                                        parcel?.paymentStatus === "paid" ?
                                             <span className="text-green-500">Paid</span>
                                             : // <Link to={`/dashboard/payment/${parcel._id}`}>
                                                 <button onClick={() => handlePayment(parcel)} className="btn btn-sm btn-primary text-black">Pay</button>
