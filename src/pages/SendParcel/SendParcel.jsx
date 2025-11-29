@@ -17,6 +17,7 @@ const SendParcel = () => {
     const regions = [...new Set(regionsDuplicate)];
     const senderRegion = useWatch({ control, name: "senderRegion" });
     const receiverRegion = useWatch({ control, name: "receiverRegion" });
+
     const axiosSecure = useAxiosSecure();
     const { user } = useContext(AuthContext);
     const navigate = useNavigate();
@@ -111,7 +112,7 @@ const SendParcel = () => {
                         <div className="divider"></div>
 
                         {/* two column */}
-                        <div className="grid grild-cols-1 md:grid-cols-2 gap-[30px] mb-[50px]">
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-[30px] mb-[50px]">
                             {/* sender details */}
                             <div>
                                 <h3 className="text-[18px] text-secondary font-extrabold mb-[30px]">Sender Details</h3>

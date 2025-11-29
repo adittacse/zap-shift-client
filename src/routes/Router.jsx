@@ -32,6 +32,7 @@ const Router = createBrowserRouter([
             },
             {
                 path: "be-a-rider",
+                loader: () => fetch("/serviceCenters.json"),
                 element: <PrivateRoute><Rider /></PrivateRoute>
             },
             {
