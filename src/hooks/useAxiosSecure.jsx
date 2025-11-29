@@ -25,8 +25,8 @@ const useAxiosSecure = () => {
         // response interceptor
         const responseInterceptor = axiosInstance.interceptors.response.use(res => {
             return res;
-        }, err => {
-            const status = err.status;
+        }, error => {
+            const status = error.status;
             if (status === 401 || status === 403) {
                 // log out the user for bad intention request
                 logOut()
@@ -41,6 +41,7 @@ const useAxiosSecure = () => {
                         });
                     });
             }
+            return Promise.reject(error);
         });
 
         return () => {
