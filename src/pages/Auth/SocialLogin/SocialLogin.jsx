@@ -1,9 +1,11 @@
 import { useContext } from "react";
 import AuthContext from "../../../contexts/AuthContext/AuthContext.jsx";
 import { useLocation, useNavigate } from "react-router";
+import useAxiosSecure from "../../../hooks/useAxiosSecure.jsx";
 
 const SocialLogin = () => {
     const { signInGoogle, setUser } = useContext(AuthContext);
+    const axiosSecure = useAxiosSecure();
     const location = useLocation();
     const navigate = useNavigate();
 
@@ -12,7 +14,21 @@ const SocialLogin = () => {
             .then((result) => {
                 result.user.reload();
                 setUser(result.user);
-                navigate(location?.state || "/", { replace: true });
+
+                // create user in the database
+                const userInfo = {
+                    displayName: result.user.displayName,
+                    email: result.user.email,
+                    photoURL: result.user.photoURL
+                }
+
+                axiosSecure.post("/users", userInfo)
+                    .then((res) => {
+                        if (res.data.insertedId) {
+                            console.log("User created in the database");
+                        }
+                        navigate(location?.state || "/", { replace: true });
+                    });
             })
             .catch((error) => {
                 console.log(error.message);

@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import AuthContext from "../../../contexts/AuthContext/AuthContext.jsx";
 import SocialLogin from "../SocialLogin/SocialLogin.jsx";
 import axios from "axios";
+import useAxiosSecure from "../../../hooks/useAxiosSecure.jsx";
 
 const Register = () => {
     const {
@@ -12,6 +13,7 @@ const Register = () => {
         formState: {errors}
     } = useForm();
     const { registerUser, updateUserProfile, setUser } = useContext(AuthContext);
+    const axiosSecure = useAxiosSecure();
     const location = useLocation();
     const navigate = useNavigate();
 
@@ -22,7 +24,7 @@ const Register = () => {
         }
 
         registerUser(data.email, data.password)
-            .then(result => {
+            .then((result) => {
                 // 1. store the image in form data
                 const formData = new FormData();
                 formData.append("image", imageFile);
@@ -30,10 +32,26 @@ const Register = () => {
                 // 2. send the image to store and get the URL
                 axios.post(`https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_image_host_key}`, formData)
                     .then(res => {
+                        const photoURL = res.data.data.url;
+
+                        // create user in the database
+                        const userInfo = {
+                            displayName: data.name,
+                            email: data.email,
+                            photoURL: photoURL
+                        }
+
+                        axiosSecure.post("/users", userInfo)
+                            .then((res) => {
+                                if (res.data.insertedId) {
+                                    console.log("User created in the database");
+                                }
+                            });
+
                         // update user profile
                         updateUserProfile({
                             displayName: data.name,
-                            photoURL: res.data.data.url
+                            photoURL: photoURL
                         })
                             .then(() => {
                                 console.log("Registered Successfully");
