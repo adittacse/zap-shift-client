@@ -1,8 +1,8 @@
-import React, {useContext} from 'react';
-import {useQuery} from "@tanstack/react-query";
+import { useContext } from 'react';
+import { useQuery } from "@tanstack/react-query";
 import AuthContext from "../../../contexts/AuthContext/AuthContext.jsx";
 import useAxiosSecure from "../../../hooks/useAxiosSecure.jsx";
-import {Link} from "react-router";
+import { Link } from "react-router";
 
 const PaymentHistory = () => {
     const { user } = useContext(AuthContext);
@@ -38,7 +38,7 @@ const PaymentHistory = () => {
                             payments.map((payment, index) => <tr key={payment._id}>
                                 <th>{index + 1}</th>
                                 <td>{payment?.parcelName}</td>
-                                <td>{new Date(payment?.paidAt).toISOString().slice(0, 10)}</td>
+                                <td>{payment?.paidAt ? new Date(payment.paidAt).toISOString().slice(0, 10) : "-"}</td>
                                 <td>{payment?.transactionId}</td>
                                 <td>{payment?.trackingId}</td>
                                 <td>$ {payment?.amount} ({payment?.paymentStatus})</td>
