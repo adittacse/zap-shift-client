@@ -28,7 +28,7 @@ const UsersManagement = () => {
             confirmButtonText: "Yes, make Admin!"
         }).then((result) => {
             if (result.isConfirmed) {
-                axiosSecure.patch(`/users/${user._id}`, roleInfo)
+                axiosSecure.patch(`/users/${user._id}/admin`, roleInfo)
                     .then((res) => {
                         if (res.data.modifiedCount) {
                             refetch();
@@ -59,7 +59,7 @@ const UsersManagement = () => {
             confirmButtonText: "Yes, remove from Admin!"
         }).then((result) => {
             if (result.isConfirmed) {
-                axiosSecure.patch(`/users/${user._id}`, roleInfo)
+                axiosSecure.patch(`/users/${user._id}/role`, roleInfo)
                     .then((res) => {
                         if (res.data.modifiedCount) {
                             refetch();
