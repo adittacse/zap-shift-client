@@ -2,8 +2,8 @@ import React from "react";
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../../hooks/useAxiosSecure.jsx";
 import { FaUserCheck } from "react-icons/fa";
-import {IoPersonRemove} from "react-icons/io5";
-import {FaTrash} from "react-icons/fa6";
+import { IoPersonRemove } from "react-icons/io5";
+import { FaTrash } from "react-icons/fa6";
 import Swal from "sweetalert2";
 
 const ApproveRiders = () => {
@@ -42,6 +42,32 @@ const ApproveRiders = () => {
 
     const handleRejection = (rider) => {
         updateRiderStatus(rider, "rejected");
+    }
+
+    const handleDelete = (id) => {
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, delete this rider!"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                axiosSecure.delete(`/riders/${id}`)
+                    .then((res) => {
+                        if (res.data.deletedCount) {
+                            refetch();
+                            Swal.fire({
+                                title: "Deleted!",
+                                text: "Rider application has been deleted.",
+                                icon: "success"
+                            });
+                        }
+                    });
+            }
+        });
     }
 
     return (
@@ -89,7 +115,7 @@ const ApproveRiders = () => {
                                     <button onClick={() => handleRejection(rider)} className="btn mr-2">
                                         <IoPersonRemove />
                                     </button>
-                                    <button className="btn">
+                                    <button onClick={() => handleDelete(rider._id)} className="btn">
                                         <FaTrash />
                                     </button>
                                 </td>
