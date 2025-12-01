@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../../hooks/useAxiosSecure.jsx";
 import { FaUserCheck } from "react-icons/fa";
 import { IoPersonRemove } from "react-icons/io5";
-import {FaEye, FaTrash} from "react-icons/fa6";
+import { FaEye, FaTrash } from "react-icons/fa6";
 import Swal from "sweetalert2";
 
 const ApproveRiders = () => {
