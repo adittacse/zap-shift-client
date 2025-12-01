@@ -47,7 +47,7 @@ const UsersManagement = () => {
 
     const handleRemoveAdmin = (user) => {
         const roleInfo = {
-            role: "admin"
+            role: "user"
         };
 
         Swal.fire({
