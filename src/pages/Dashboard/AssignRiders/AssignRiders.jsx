@@ -1,8 +1,9 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../../hooks/useAxiosSecure.jsx";
 
 const AssignRiders = () => {
+    const [selectedParcel, setSelectedParcel] = useState(null);
     const axiosSecure = useAxiosSecure();
     const riderModalRef = useRef(null);
     const { data: parcels = [] } = useQuery({
@@ -13,8 +14,29 @@ const AssignRiders = () => {
         }
     });
 
-    const handleAssignRider = (parcel) => {
+    const { data: riders = [] } = useQuery({
+        queryKey: ["riders", selectedParcel?.senderDistrict, "available"],
+        enabled: !!selectedParcel,
+        queryFn: async () => {
+            console.log(selectedParcel?.senderDistrict);
+            const res = await axiosSecure.get(`/riders/?status=approved&district=${selectedParcel?.senderDistrict}&workStatus=available`);
+            return res.data;
+        }
+    });
+
+    const openAssignRiderModal = (parcel) => {
+        setSelectedParcel(parcel);
         riderModalRef.current.showModal();
+    }
+
+    const handleAssignRider = (rider) => {
+        const riderAssignInfo = {
+            riderId: rider._id,
+            riderName: rider.riderName,
+            riderEmail: rider.riderEmail,
+            parcelId: selectedParcel._id
+        };
+        axiosSecure.patch(``, riderAssignInfo);
     }
 
     return (
@@ -43,7 +65,7 @@ const AssignRiders = () => {
                                 <td>{parcel?.createdAt ? new Date(parcel.createdAt).toISOString().slice(0, 10) : "-"}</td>
                                 <td>{parcel?.senderDistrict}</td>
                                 <td>
-                                    <button onClick={() => handleAssignRider(parcel)} className="btn btn-primary text-black">Assign Rider</button>
+                                    <button onClick={() => openAssignRiderModal(parcel)} className="btn btn-primary text-black">Assign Rider</button>
                                 </td>
                             </tr>)
                         }
@@ -53,8 +75,34 @@ const AssignRiders = () => {
 
             <dialog ref={riderModalRef} className="modal modal-bottom sm:modal-middle">
                 <div className="modal-box">
-                    <h3 className="font-bold text-lg">Hello!</h3>
-                    <p className="py-4">Press ESC key or click the button below to close</p>
+                    <h3 className="font-bold text-lg">Riders: {riders.length}</h3>
+
+                    <div className="overflow-x-auto">
+                        <table className="table table-zebra">
+                            {/* head */}
+                            <thead>
+                            <tr>
+                                <th>Sl.</th>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Action</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                                {
+                                    riders.map((rider, index) => <tr key={rider._id}>
+                                        <th>{index + 1}</th>
+                                        <td>{rider.riderName}</td>
+                                        <td>{rider.riderEmail}</td>
+                                        <td>
+                                            <button onClick={() => handleAssignRider(rider)} className="btn btn-primary text-black">Assign</button>
+                                        </td>
+                                    </tr>)
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+
                     <div className="modal-action">
                         <form method="dialog">
                             <button className="btn">Close</button>
