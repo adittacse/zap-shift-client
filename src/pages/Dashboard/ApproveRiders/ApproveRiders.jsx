@@ -85,7 +85,8 @@ const ApproveRiders = () => {
                         <th>NID</th>
                         <th>Region</th>
                         <th>Wire-house</th>
-                        <th>Status</th>
+                        <th>Application Status</th>
+                        <th>Work Status</th>
                         <th>Actions</th>
                     </tr>
                     </thead>

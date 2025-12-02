@@ -4,6 +4,7 @@ import { MdPayment } from "react-icons/md";
 import { FaMotorcycle } from "react-icons/fa6";
 import { FaUsers } from "react-icons/fa";
 import useRole from "../hooks/useRole.jsx";
+import {RiEBikeFill} from "react-icons/ri";
 
 const DashboardLayout = () => {
     const { role } = useRole();
@@ -59,6 +60,13 @@ const DashboardLayout = () => {
                                     <NavLink to="/dashboard/approve-riders" className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Approve Riders">
                                         <FaMotorcycle />
                                         <span className="is-drawer-close:hidden">Approve Riders</span>
+                                    </NavLink>
+                                </li>
+
+                                <li>
+                                    <NavLink to="/dashboard/assign-riders" className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Assign Riders">
+                                        <RiEBikeFill />
+                                        <span className="is-drawer-close:hidden">Assign Riders</span>
                                     </NavLink>
                                 </li>
 
