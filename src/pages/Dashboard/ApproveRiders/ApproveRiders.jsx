@@ -108,6 +108,7 @@ const ApproveRiders = () => {
                                         {rider?.status}
                                     </p>
                                 </td>
+                                <td>{rider?.workStatus}</td>
                                 <td>
                                     <button className="btn mr-2">
                                         <FaEye />
