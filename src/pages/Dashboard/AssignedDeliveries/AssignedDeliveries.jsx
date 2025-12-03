@@ -1,11 +1,10 @@
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import useAxiosSecure from "../../../hooks/useAxiosSecure.jsx";
 import { useQuery } from "@tanstack/react-query";
 import AuthContext from "../../../contexts/AuthContext/AuthContext.jsx";
 import Swal from "sweetalert2";
 
 const AssignedDeliveries = () => {
-    const [isConfirmed, setIsConfirmed] = useState(false);
     const { user } = useContext(AuthContext);
     const axiosSecure = useAxiosSecure();
     const { data: parcels = [], refetch } = useQuery({
@@ -16,20 +15,21 @@ const AssignedDeliveries = () => {
         }
     });
 
-    const handleAcceptDelivery = (parcel) => {
+    const handleDeliveryStatusUpdate = (parcel, status) => {
         const statusInfo = {
-            deliveryStatus: "rider_arriving"
+            deliveryStatus: status
         };
+
+        let message = `Parcel status is update with ${status.split("_").join(" ")}.`;
 
         axiosSecure.patch(`/parcels/${parcel._id}/status`, statusInfo)
             .then((res) => {
                 if (res.data.modifiedCount) {
                     refetch();
-                    setIsConfirmed(true);
                     Swal.fire({
                         position: "top-end",
                         icon: "success",
-                        title: "Thank you for accepting.",
+                        title: message,
                         showConfirmButton: false,
                         timer: 1500
                     });
@@ -68,14 +68,15 @@ const AssignedDeliveries = () => {
                                 <td>
                                     {
                                         parcel.deliveryStatus === "driver_assigned" ? <>
-                                            <button onClick={() => handleAcceptDelivery(parcel)} className="btn btn-primary text-black mr-2">Accept</button>
+                                            <button onClick={() => handleDeliveryStatusUpdate(parcel, "rider_arriving")} className="btn btn-primary text-black mr-2">Accept</button>
                                             <button className="btn btn-warning text-black">Reject</button>
                                         </> :
-                                        isConfirmed === true ? <span>Accepted</span> : <span>Rejected</span>
+                                        <span>Accepted</span>
                                     }
                                 </td>
-                                <td>
-
+                                <td className="flex flex-col gap-2">
+                                    <button onClick={() => handleDeliveryStatusUpdate(parcel, "parcel_picked_up")} className="btn btn-primary text-black">Marked as Picked Up</button>
+                                    <button onClick={() => handleDeliveryStatusUpdate(parcel, "parcel_delivered")} className="btn btn-primary text-black">Marked as Delivered</button>
                                 </td>
                             </tr>)
                         }
