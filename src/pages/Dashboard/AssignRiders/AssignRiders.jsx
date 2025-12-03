@@ -1,12 +1,14 @@
 import { useRef, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../../hooks/useAxiosSecure.jsx";
+import Swal from "sweetalert2";
 
 const AssignRiders = () => {
     const [selectedParcel, setSelectedParcel] = useState(null);
     const axiosSecure = useAxiosSecure();
     const riderModalRef = useRef(null);
-    const { data: parcels = [] } = useQuery({
+
+    const { data: parcels = [], refetch: parcelsRefetch } = useQuery({
         queryKey: ["parcels", "pending-pickup"],
         queryFn: async () => {
             const res = await axiosSecure.get("/parcels?deliveryStatus=pending-pickup");
@@ -36,7 +38,20 @@ const AssignRiders = () => {
             riderEmail: rider.riderEmail,
             parcelId: selectedParcel._id
         };
-        axiosSecure.patch(``, riderAssignInfo);
+        axiosSecure.patch(`/parcels/${selectedParcel._id}`, riderAssignInfo)
+            .then(res => {
+                if (res.data.modifiedCount) {
+                    riderModalRef.current.close();
+                    parcelsRefetch();
+                    Swal.fire({
+                        position: "top-end",
+                        icon: "success",
+                        title: "Rider has been.",
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
+                }
+            })
     }
 
     return (
@@ -65,7 +80,7 @@ const AssignRiders = () => {
                                 <td>{parcel?.createdAt ? new Date(parcel.createdAt).toISOString().slice(0, 10) : "-"}</td>
                                 <td>{parcel?.senderDistrict}</td>
                                 <td>
-                                    <button onClick={() => openAssignRiderModal(parcel)} className="btn btn-primary text-black">Assign Rider</button>
+                                    <button onClick={() => openAssignRiderModal(parcel)} className="btn btn-primary text-black">Find Riders</button>
                                 </td>
                             </tr>)
                         }
