@@ -46,7 +46,7 @@ const AssignRiders = () => {
                     Swal.fire({
                         position: "top-end",
                         icon: "success",
-                        title: "Rider has been.",
+                        title: "Rider has been assigned.",
                         showConfirmButton: false,
                         timer: 1500
                     });

@@ -79,10 +79,7 @@ const ApproveRiders = () => {
                     <thead>
                     <tr>
                         <th>Sl.</th>
-                        <th>Name & Email</th>
-                        <th>Age</th>
-                        <th>Contact</th>
-                        <th>NID</th>
+                        <th>Rider Info</th>
                         <th>Region</th>
                         <th>Wire-house</th>
                         <th>Application Status</th>
@@ -97,10 +94,8 @@ const ApproveRiders = () => {
                                 <td>
                                     <p>{rider?.riderName}</p>
                                     <p>{rider?.riderEmail}</p>
+                                    <p>{rider?.riderContact}</p>
                                 </td>
-                                <td>{rider?.riderAge}</td>
-                                <td>{rider?.riderContact}</td>
-                                <td>{rider?.riderNID}</td>
                                 <td>{rider?.riderRegion}</td>
                                 <td>{rider?.riderDistrict}</td>
                                 <td>
