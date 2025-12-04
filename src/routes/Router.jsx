@@ -22,11 +22,14 @@ import AssignRiders from "../pages/Dashboard/AssignRiders/AssignRiders.jsx";
 import RiderRoute from "./RiderRoute.jsx";
 import AssignedDeliveries from "../pages/Dashboard/AssignedDeliveries/AssignedDeliveries.jsx";
 import CompletedDeliveries from "../pages/Dashboard/CompletedDeliveries/CompletedDeliveries.jsx";
+import TrackParcel from "../pages/TrackParcel/TrackParcel.jsx";
+import Loading from "../components/Loading/Loading.jsx";
 
 const Router = createBrowserRouter([
     {
         path: "/",
         Component: RootLayout,
+        hydrateFallbackElement: Loading(),
         children : [
             {
                 index: true,
@@ -46,6 +49,11 @@ const Router = createBrowserRouter([
                 path: "send-parcel",
                 loader: () => fetch("/serviceCenters.json"),
                 element: <PrivateRoute><SendParcel /></PrivateRoute>
+            },
+            {
+                path: "track-parcel/:trackingId",
+                loader: ({ params }) => fetch(`/${params.trackingId}`),
+                element: <TrackParcel />
             },
             {
                 path: "*",
