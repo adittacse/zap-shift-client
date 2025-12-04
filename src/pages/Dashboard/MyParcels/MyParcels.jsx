@@ -6,7 +6,7 @@ import { FaRegEdit } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
 import { FaMagnifyingGlass } from "react-icons/fa6";
 import Swal from "sweetalert2";
-import {Link} from "react-router";
+import { Link } from "react-router";
 // import { Link } from "react-router";
 
 const MyParcels = () => {
@@ -53,6 +53,7 @@ const MyParcels = () => {
             parcelName: parcel.parcelName,
             senderEmail: parcel.senderEmail,
             cost: parcel.cost,
+            trackingId: parcel.trackingId
         }
 
         const res = await axiosSecure.post("/create-checkout-session", paymentInfo);

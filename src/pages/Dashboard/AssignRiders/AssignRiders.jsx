@@ -9,9 +9,9 @@ const AssignRiders = () => {
     const riderModalRef = useRef(null);
 
     const { data: parcels = [], refetch: parcelsRefetch } = useQuery({
-        queryKey: ["parcels", "pending-pickup"],
+        queryKey: ["parcels", "parcel_paid"],
         queryFn: async () => {
-            const res = await axiosSecure.get("/parcels?deliveryStatus=pending-pickup");
+            const res = await axiosSecure.get("/parcels?deliveryStatus=parcel_paid");
             return res.data;
         }
     });
@@ -20,7 +20,6 @@ const AssignRiders = () => {
         queryKey: ["riders", selectedParcel?.senderDistrict, "available"],
         enabled: !!selectedParcel,
         queryFn: async () => {
-            console.log(selectedParcel?.senderDistrict);
             const res = await axiosSecure.get(`/riders/?status=approved&district=${selectedParcel?.senderDistrict}&workStatus=available`);
             return res.data;
         }
