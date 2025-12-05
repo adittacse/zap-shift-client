@@ -40,7 +40,11 @@ const PaymentHistory = () => {
                                 <td>{payment?.parcelName}</td>
                                 <td>{payment?.paidAt ? new Date(payment.paidAt).toISOString().slice(0, 10) : "-"}</td>
                                 <td>{payment?.transactionId}</td>
-                                <td>{payment?.trackingId}</td>
+                                <td>
+                                    <Link to={`/track-parcel/${payment?.trackingId}`}>
+                                        {payment?.trackingId}
+                                    </Link>
+                                </td>
                                 <td>$ {payment?.amount} ({payment?.paymentStatus})</td>
                                 <td>
                                     <Link to={``}>
