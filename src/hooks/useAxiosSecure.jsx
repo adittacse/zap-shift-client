@@ -5,7 +5,7 @@ import AuthContext from "../contexts/AuthContext/AuthContext.jsx";
 import Swal from "sweetalert2";
 
 const axiosInstance = axios.create({
-    baseURL: "http://localhost:3000"
+    baseURL: "https://zap-shift-server-iy9f.onrender.com"
 });
 
 const useAxiosSecure = () => {
