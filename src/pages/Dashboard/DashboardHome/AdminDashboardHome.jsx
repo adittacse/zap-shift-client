@@ -1,7 +1,6 @@
-import React from "react";
 import useAxiosSecure from "../../../hooks/useAxiosSecure.jsx";
 import { useQuery } from "@tanstack/react-query";
-import {Legend, Pie, PieChart, Tooltip} from "recharts";
+import { Legend, Pie, PieChart, Tooltip } from "recharts";
 
 const AdminDashboardHome = () => {
     const axiosSecure = useAxiosSecure();
