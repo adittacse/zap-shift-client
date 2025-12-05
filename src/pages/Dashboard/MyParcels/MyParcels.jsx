@@ -109,7 +109,7 @@ const MyParcels = () => {
                                         {parcel?.trackingId}
                                     </Link>
                                 </td>
-                                <td>{parcel?.deliveryStatus}</td>
+                                <td className="capitalize">{parcel?.deliveryStatus.split("_").join(" ")}</td>
                                 <td className="space-x-2">
                                     <button className="btn btn-square hover:bg-primary tooltip" data-tip="View">
                                         <FaMagnifyingGlass />

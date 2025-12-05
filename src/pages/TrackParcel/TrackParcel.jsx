@@ -36,7 +36,7 @@ const TrackParcel = () => {
                             </svg>
                         </div>
                         <div className="timeline-end timeline-box">
-                            <span className="text-xl">{track?.details}</span>
+                            <span className="text-xl capitalize">{track?.details?.split("_").join(" ")}</span>
                         </div>
                         <hr />
                     </li>)
